@@ -16,7 +16,7 @@
 
 typedef pcl::PointXYZI PointType;
 
-int N_SCANS=16;
+int N_SCANS=32;
 ros::Publisher pubLaserCloudup;
 ros::Publisher pubLaserClouddown;
 
@@ -50,13 +50,14 @@ void cloud_Callhandle(const sensor_msgs::PointCloud2 ros_cloud)
         point.y = laserCloudIn.points[i].y;
         point.z = laserCloudIn.points[i].z;
 
-	//仰角
+	    //仰角
         float angle = atan(point.z / sqrt(point.x * point.x + point.y * point.y)) * 180 / M_PI;
         int scanID = 0;
 
-        if (N_SCANS == 16)
+        if (N_SCANS == 32)
         {
-            scanID = int((angle + 15) / 2 + 0.5);
+            // scanID = int((angle + 31) / 2 + 0.5);
+            scanID = int((angle + 92.0/3.0) * 3.0 / 4.0);
             if (scanID > (N_SCANS - 1) || scanID < 0)
             {
                 count--;
